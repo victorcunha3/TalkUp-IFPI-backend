@@ -51,8 +51,9 @@ class PublicacaoSerializer(ModelSerializer):
     class Meta:
         model = Publicacao
         fields = '__all__'
-
-def get_comentarios(self, publicacao):
+    
+    def get_comentarios(self, publicacao):
         comentarios_relacionados = Comentario.objects.filter(publicacao=publicacao)
         comentarios_serializers = ComentarioSerializer(comentarios_relacionados, many=True)
         return comentarios_serializers.data
+
