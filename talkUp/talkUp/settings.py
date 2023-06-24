@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-^p!7u9qa&vf_fiy#&li-q8l!ubz=ujt9hj9k*9_$6crsuc3*i6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["talkup.onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
