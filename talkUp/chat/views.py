@@ -118,4 +118,14 @@ class ComentarioApiView(APIView):
             return Response(ComentarioSerializer(comentario).data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #new    
+    def get(self, request, publicacao_id):
+        try:
+            publicacao = Publicacao.objects.get(id=publicacao_id)
+        except Publicacao.DoesNotExist:
+            return Response({'erro': 'A publicação não existe.'}, status=status.HTTP_404_NOT_FOUND)
+
+        comentarios = Comentario.objects.filter(publicacao=publicacao)
+        serializer = ComentarioSerializer(comentarios, many=True)
+        return Response(serializer.data)
     
