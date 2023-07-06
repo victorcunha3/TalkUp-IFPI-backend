@@ -39,6 +39,7 @@ class CurtidaSerializer(ModelSerializer):
         fields = '__all__'
 
 class ComentarioSerializer(ModelSerializer):
+    autor = serializers.CharField(source='usuario.username', read_only=True)
     
     class Meta:
         model = Comentario
