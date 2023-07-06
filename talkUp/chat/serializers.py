@@ -43,8 +43,8 @@ class ComentarioSerializer(ModelSerializer):
     
     class Meta:
         model = Comentario
-        #fields = '__all__'
-        fields = ['conteudo', 'autor']
+        fields = '__all__'
+        #fields = ['conteudo', 'autor']
 
 class PublicacaoSerializer(ModelSerializer):
     comentarios = SerializerMethodField()
