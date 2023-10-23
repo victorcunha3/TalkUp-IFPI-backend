@@ -117,11 +117,6 @@ class ComentarioApiView(APIView):
             return Response(ComentarioSerializer(comentario).data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-<<<<<<< HEAD
-    
-=======
-    #new    
->>>>>>> e57b6ddbd286e0983a9b678e4e5109e70c3a28e1
     def get(self, request, publicacao_id):
         try:
             publicacao = Publicacao.objects.get(id=publicacao_id)
@@ -131,8 +126,3 @@ class ComentarioApiView(APIView):
         comentarios = Comentario.objects.filter(publicacao=publicacao)
         serializer = ComentarioSerializer(comentarios, many=True)
         return Response(serializer.data)
-<<<<<<< HEAD
-    
-=======
-    
->>>>>>> e57b6ddbd286e0983a9b678e4e5109e70c3a28e1
