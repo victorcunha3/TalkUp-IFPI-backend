@@ -43,7 +43,7 @@ from datetime import datetime
 class ComentarioSerializer(ModelSerializer):
     usuario = serializers.StringRelatedField(source='usuario.username')  # Exibir o nome do autor
     data_comentario_formatada = SerializerMethodField()
-
+    #meta
     class Meta:
         model = Comentario
         fields = ['id', 'conteudo', 'data_comentario', 'usuario', 'publicacao', 'data_comentario_formatada']
