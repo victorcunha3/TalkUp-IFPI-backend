@@ -38,17 +38,27 @@ class CurtidaSerializer(ModelSerializer):
         model = Curtida
         fields = '__all__'
 
+from datetime import datetime
+
 class ComentarioSerializer(ModelSerializer):
-    autor = serializers.CharField(source='autor.username', read_only=True)
-    
+    usuario = serializers.StringRelatedField(source='usuario.username')  # Exibir o nome do autor
+    data_comentario_formatada = SerializerMethodField()
+
     class Meta:
         model = Comentario
-        fields = '__all__'
-        #fields = ['conteudo', 'autor']
+        fields = ['id', 'conteudo', 'data_comentario', 'usuario', 'publicacao', 'data_comentario_formatada']
+
+    def get_data_comentario_formatada(self, comentario):
+        data_comentario = comentario.data_comentario
+        if data_comentario:
+            return data_comentario.strftime('%Y-%m-%d')
+        return None
+
 
 class PublicacaoSerializer(ModelSerializer):
     comentarios = SerializerMethodField()
-    autor = serializers.CharField(source='autor.username', read_only=True)
+    autor = serializers.StringRelatedField(source='autor.username', read_only=True)
+    data_publicacao_formatada = SerializerMethodField()
 
     class Meta:
         model = Publicacao
@@ -58,4 +68,9 @@ class PublicacaoSerializer(ModelSerializer):
         comentarios_relacionados = Comentario.objects.filter(publicacao=publicacao)
         comentarios_serializers = ComentarioSerializer(comentarios_relacionados, many=True)
         return comentarios_serializers.data
+
+    def get_data_publicacao_formatada(self, publicacao):
+        # Formate a data da publicação no formato desejado
+        return datetime.strftime(publicacao.data_publicacao, '%Y-%m-%d')
+
     
