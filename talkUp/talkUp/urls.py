@@ -21,6 +21,4 @@ from chat.url import urlpatters as urls_project
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat/', include(urls_project)),
-
-]
+    path('chat/', include(urls_project))]

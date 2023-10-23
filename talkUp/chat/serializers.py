@@ -39,6 +39,7 @@ class CurtidaSerializer(ModelSerializer):
         fields = '__all__'
 
 class ComentarioSerializer(ModelSerializer):
+    autor = serializers.CharField(source='autor.username', read_only=True)
     
     class Meta:
         model = Comentario
@@ -47,6 +48,7 @@ class ComentarioSerializer(ModelSerializer):
 
 class PublicacaoSerializer(ModelSerializer):
     comentarios = SerializerMethodField()
+    autor = serializers.CharField(source='autor.username', read_only=True)
 
     class Meta:
         model = Publicacao
@@ -56,4 +58,4 @@ class PublicacaoSerializer(ModelSerializer):
         comentarios_relacionados = Comentario.objects.filter(publicacao=publicacao)
         comentarios_serializers = ComentarioSerializer(comentarios_relacionados, many=True)
         return comentarios_serializers.data
-
+    

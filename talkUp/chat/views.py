@@ -7,8 +7,7 @@ from .serializers import UsuarioSerializer, PerfilSerializer, PublicacaoSerializ
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import ListAPIView
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 
 class UsuarioView(ListAPIView):
@@ -118,4 +117,14 @@ class ComentarioApiView(APIView):
             return Response(ComentarioSerializer(comentario).data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request, publicacao_id):
+        try:
+            publicacao = Publicacao.objects.get(id=publicacao_id)
+        except Publicacao.DoesNotExist:
+            return Response({'erro': 'A publicação não existe.'}, status=status.HTTP_404_NOT_FOUND)
+
+        comentarios = Comentario.objects.filter(publicacao=publicacao)
+        serializer = ComentarioSerializer(comentarios, many=True)
+        return Response(serializer.data)
     

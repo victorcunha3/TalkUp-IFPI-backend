@@ -29,6 +29,9 @@ class Publicacao(models.Model):
     visibilidade = models.CharField(max_length=15, choices=VISIBILIDADE_CHOICES, default='publico')
     comentarios = models.ManyToManyField('Comentario', related_name='publicacoes', blank=True)
 
+    def __str__(self) -> str:
+        return self.autor.username
+    
 class Curtida(models.Model):
     usuario = models.ForeignKey(Usuario, related_name='curtidas', on_delete=models.CASCADE)
     publicacao = models.ForeignKey(Publicacao, related_name='curtidas_relacionadas', on_delete=models.CASCADE)
