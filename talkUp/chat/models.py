@@ -42,3 +42,6 @@ class Comentario(models.Model):
     publicacao = models.ForeignKey(Publicacao, related_name='comentario', on_delete=models.CASCADE, blank=True)
     conteudo = models.TextField()
     data_comentario = models.DateTimeField(default=timezone.now)
+
+    def __str__(self) -> str:
+        return self.autor.username
